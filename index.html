@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>应用下载导航</title>
+    <style>
+        :root {
+            --bg-color: #f8fafc;
+            --card-bg: #ffffff;
+            --text-main: #0f172a;
+            --text-sub: #64748b;
+            --accent: #2563eb;
+            --accent-hover: #1d4ed8;
+            --border: #e2e8f0;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg-color: #0f172a;
+                --card-bg: #1e293b;
+                --text-main: #f8fafc;
+                --text-sub: #94a3b8;
+                --accent: #3b82f6;
+                --accent-hover: #60a5fa;
+                --border: #334155;
+            }
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 40px 20px;
+        }
+
+        header {
+            text-align: center;
+            max-width: 600px;
+            margin-bottom: 40px;
+        }
+
+        header h1 {
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            color: var(--text-sub);
+            font-size: 1rem;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 800px;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+            gap: 20px;
+        }
+
+        .app-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .app-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+
+        .app-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 12px;
+        }
+
+        .app-icon {
+            width: 56px;
+            height: 56px;
+            border-radius: 12px;
+            object-fit: cover;
+            background-color: var(--border);
+        }
+
+        .app-info h3 {
+            font-size: 1.2rem;
+            margin-bottom: 4px;
+        }
+
+        .app-info .version {
+            font-size: 0.8rem;
+            color: var(--text-sub);
+            background: var(--bg-color);
+            padding: 2px 8px;
+            border-radius: 4px;
+            border: 1px solid var(--border);
+        }
+
+        .app-desc {
+            color: var(--text-sub);
+            font-size: 0.9rem;
+            line-height: 1.5;
+            margin-bottom: 20px;
+            flex-grow: 1;
+        }
+
+        .download-btn {
+            display: block;
+            text-align: center;
+            background-color: var(--accent);
+            color: #ffffff;
+            text-decoration: none;
+            padding: 10px 16px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: background-color 0.2s;
+        }
+
+        .download-btn:hover {
+            background-color: var(--accent-hover);
+        }
+
+        footer {
+            margin-top: auto;
+            padding-top: 40px;
+            color: var(--text-sub);
+            font-size: 0.85rem;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>应用下载中心</h1>
+        <p>提供最新版本的客户端下载与更新导航</p>
+    </header>
+
+    <main class="container">
+
+        <!-- 应用卡片 1 -->
+        <div class="app-card">
+            <div>
+                <div class="app-header">
+                    <img src="https://api.dicebear.com/7.x/shapes/svg?seed=PCloud" alt="App Icon" class="app-icon">
+                    <div class="app-info">
+                        <h3>PCloud 桌面端</h3>
+                        <span class="version">v1.2.0 (macOS)</span>
+                    </div>
+                </div>
+                <p class="app-desc">跨平台云存储客户端，支持高效文件同步与本地管理。</p>
+            </div>
+            <a href="https://github.com/YOUR_USER/YOUR_REPO/releases/download/v1.2.0/PCloud.dmg" class="download-btn" target="_blank">直接下载 (.dmg)</a>
+        </div>
+
+        <!-- 应用卡片 2 -->
+        <div class="app-card">
+            <div>
+                <div class="app-header">
+                    <img src="https://api.dicebear.com/7.x/shapes/svg?seed=SyncTool" alt="App Icon" class="app-icon">
+                    <div class="app-info">
+                        <h3>Cloud Sync Tool</h3>
+                        <span class="version">v2.0.1 (Windows)</span>
+                    </div>
+                </div>
+                <p class="app-desc">支持多云盘极速互转与数据同步辅助工具。</p>
+            </div>
+            <a href="https://github.com/YOUR_USER/YOUR_REPO/releases/download/v2.0.1/Setup.exe" class="download-btn" target="_blank">直接下载 (.exe)</a>
+        </div>
+
+    </main>
+
+    <footer>
+        <p>© 2026 App Center. Hosted on GitHub Pages.</p>
+    </footer>
+
+</body>
+</html>
