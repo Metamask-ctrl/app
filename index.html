@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>应用下载导航</title>
+    <title>应用下载中心</title>
     <style>
         :root {
             --bg-color: #f8fafc;
@@ -13,6 +13,7 @@
             --accent: #2563eb;
             --accent-hover: #1d4ed8;
             --border: #e2e8f0;
+            --badge-bg: #f1f5f9;
         }
 
         @media (prefers-color-scheme: dark) {
@@ -24,6 +25,7 @@
                 --accent: #3b82f6;
                 --accent-hover: #60a5fa;
                 --border: #334155;
+                --badge-bg: #0f172a;
             }
         }
 
@@ -47,7 +49,7 @@
         header {
             text-align: center;
             max-width: 600px;
-            margin-bottom: 40px;
+            margin-bottom: 30px;
         }
 
         header h1 {
@@ -60,19 +62,45 @@
             font-size: 1rem;
         }
 
+        .filter-container {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .filter-btn {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            color: var(--text-sub);
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+
+        .filter-btn:hover, .filter-btn.active {
+            background: var(--accent);
+            color: #ffffff;
+            border-color: var(--accent);
+        }
+
         .container {
             width: 100%;
-            max-width: 800px;
+            max-width: 900px;
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
             gap: 20px;
         }
 
         .app-card {
             background-color: var(--card-bg);
             border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 20px;
+            border-radius: 16px;
+            padding: 24px;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
@@ -81,56 +109,75 @@
 
         .app-card:hover {
             transform: translateY(-4px);
-            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 12px 30px -10px rgba(0, 0, 0, 0.15);
         }
 
         .app-header {
             display: flex;
             align-items: center;
-            gap: 15px;
-            margin-bottom: 12px;
+            gap: 16px;
+            margin-bottom: 14px;
         }
 
         .app-icon {
-            width: 56px;
-            height: 56px;
-            border-radius: 12px;
+            width: 60px;
+            height: 60px;
+            border-radius: 14px;
             object-fit: cover;
             background-color: var(--border);
         }
 
         .app-info h3 {
-            font-size: 1.2rem;
+            font-size: 1.25rem;
             margin-bottom: 4px;
         }
 
-        .app-info .version {
+        .app-meta {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .version {
             font-size: 0.8rem;
             color: var(--text-sub);
-            background: var(--bg-color);
+            background: var(--badge-bg);
             padding: 2px 8px;
-            border-radius: 4px;
+            border-radius: 6px;
             border: 1px solid var(--border);
+        }
+
+        .platform-badge {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--accent);
         }
 
         .app-desc {
             color: var(--text-sub);
-            font-size: 0.9rem;
-            line-height: 1.5;
+            font-size: 0.92rem;
+            line-height: 1.6;
             margin-bottom: 20px;
             flex-grow: 1;
         }
 
+        .btn-group {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
         .download-btn {
-            display: block;
+            flex: 1;
+            min-width: 120px;
             text-align: center;
             background-color: var(--accent);
             color: #ffffff;
             text-decoration: none;
-            padding: 10px 16px;
+            padding: 10px 14px;
             border-radius: 8px;
             font-weight: 600;
-            font-size: 0.95rem;
+            font-size: 0.9rem;
             transition: background-color 0.2s;
         }
 
@@ -138,9 +185,19 @@
             background-color: var(--accent-hover);
         }
 
+        .download-btn.secondary {
+            background-color: transparent;
+            color: var(--text-main);
+            border: 1px solid var(--border);
+        }
+
+        .download-btn.secondary:hover {
+            background-color: var(--badge-bg);
+        }
+
         footer {
             margin-top: auto;
-            padding-top: 40px;
+            padding-top: 50px;
             color: var(--text-sub);
             font-size: 0.85rem;
             text-align: center;
@@ -151,46 +208,123 @@
 
     <header>
         <h1>应用下载中心</h1>
-        <p>提供最新版本的客户端下载与更新导航</p>
+        <p>提供支持 Windows、macOS、Linux 及 Android 的最新全平台客户端</p>
     </header>
+
+    <!-- 平台分类筛选组件 -->
+    <div class="filter-container">
+        <button class="filter-btn active" onclick="filterPlatform('all')">全部平台</button>
+        <button class="filter-btn" onclick="filterPlatform('desktop')">桌面端 (Win / Mac / Linux)</button>
+        <button class="filter-btn" onclick="filterPlatform('mobile')">移动端 (Android)</button>
+    </div>
 
     <main class="container">
 
-        <!-- 应用卡片 1 -->
-        <div class="app-card">
+        <!-- 1. PCloud macOS 版本 -->
+        <div class="app-card" data-category="desktop">
             <div>
                 <div class="app-header">
-                    <img src="https://api.dicebear.com/7.x/shapes/svg?seed=PCloud" alt="App Icon" class="app-icon">
+                    <img src="https://api.dicebear.com/7.x/shapes/svg?seed=PCloudMac" alt="Icon" class="app-icon">
                     <div class="app-info">
-                        <h3>PCloud 桌面端</h3>
-                        <span class="version">v1.2.0 (macOS)</span>
+                        <h3>PCloud for macOS</h3>
+                        <div class="app-meta">
+                            <span class="platform-badge">macOS</span>
+                            <span class="version">v1.2.0</span>
+                        </div>
                     </div>
                 </div>
-                <p class="app-desc">跨平台云存储客户端，支持高效文件同步与本地管理。</p>
+                <p class="app-desc">支持 Universal 通用架构（Intel 与 Apple Silicon 原生支持）。</p>
             </div>
-            <a href="https://github.com/YOUR_USER/YOUR_REPO/releases/download/v1.2.0/PCloud.dmg" class="download-btn" target="_blank">直接下载 (.dmg)</a>
+            <div class="btn-group">
+                <a href="https://github.com/YOUR_USER/YOUR_REPO/releases/download/v1.2.0/PCloud-1.2.0.dmg" class="download-btn" target="_blank">下载 .dmg</a>
+            </div>
         </div>
 
-        <!-- 应用卡片 2 -->
-        <div class="app-card">
+        <!-- 2. PCloud Windows 版本 -->
+        <div class="app-card" data-category="desktop">
             <div>
                 <div class="app-header">
-                    <img src="https://api.dicebear.com/7.x/shapes/svg?seed=SyncTool" alt="App Icon" class="app-icon">
+                    <img src="https://api.dicebear.com/7.x/shapes/svg?seed=PCloudWin" alt="Icon" class="app-icon">
                     <div class="app-info">
-                        <h3>Cloud Sync Tool</h3>
-                        <span class="version">v2.0.1 (Windows)</span>
+                        <h3>PCloud for Windows</h3>
+                        <div class="app-meta">
+                            <span class="platform-badge">Windows</span>
+                            <span class="version">v1.2.0</span>
+                        </div>
                     </div>
                 </div>
-                <p class="app-desc">支持多云盘极速互转与数据同步辅助工具。</p>
+                <p class="app-desc">支持 Windows 10/11 (64 位系统)，免安装绿色版与安装包。</p>
             </div>
-            <a href="https://github.com/YOUR_USER/YOUR_REPO/releases/download/v2.0.1/Setup.exe" class="download-btn" target="_blank">直接下载 (.exe)</a>
+            <div class="btn-group">
+                <a href="https://github.com/YOUR_USER/YOUR_REPO/releases/download/v1.2.0/PCloud-Setup-1.2.0.exe" class="download-btn" target="_blank">下载安装包 (.exe)</a>
+            </div>
+        </div>
+
+        <!-- 3. PCloud Linux 版本 -->
+        <div class="app-card" data-category="desktop">
+            <div>
+                <div class="app-header">
+                    <img src="https://api.dicebear.com/7.x/shapes/svg?seed=PCloudLinux" alt="Icon" class="app-icon">
+                    <div class="app-info">
+                        <h3>PCloud for Linux</h3>
+                        <div class="app-meta">
+                            <span class="platform-badge">Linux</span>
+                            <span class="version">v1.2.0</span>
+                        </div>
+                    </div>
+                </div>
+                <p class="app-desc">支持 Ubuntu、Debian、Fedora 及 Arch 等主流发行的通用程序包。</p>
+            </div>
+            <div class="btn-group">
+                <a href="https://github.com/YOUR_USER/YOUR_REPO/releases/download/v1.2.0/PCloud-1.2.0.AppImage" class="download-btn" target="_blank">AppImage (通用)</a>
+                <a href="https://github.com/YOUR_USER/YOUR_REPO/releases/download/v1.2.0/PCloud-1.2.0.deb" class="download-btn secondary" target="_blank">.deb (Debian/Ubuntu)</a>
+            </div>
+        </div>
+
+        <!-- 4. PCloud Android 版本 -->
+        <div class="app-card" data-category="mobile">
+            <div>
+                <div class="app-header">
+                    <img src="https://api.dicebear.com/7.x/shapes/svg?seed=PCloudAndroid" alt="Icon" class="app-icon">
+                    <div class="app-info">
+                        <h3>PCloud for Android</h3>
+                        <div class="app-meta">
+                            <span class="platform-badge">Android</span>
+                            <span class="version">v1.1.5</span>
+                        </div>
+                    </div>
+                </div>
+                <p class="app-desc">适用于 Android 8.0 及以上版本手机与平板设备。</p>
+            </div>
+            <div class="btn-group">
+                <a href="https://github.com/YOUR_USER/YOUR_REPO/releases/download/v1.1.5/PCloud-release.apk" class="download-btn" target="_blank">直接下载 (.apk)</a>
+            </div>
         </div>
 
     </main>
 
     <footer>
-        <p>© 2026 App Center. Hosted on GitHub Pages.</p>
+        <p>© 2026 PCloud Application Center. Powered by GitHub Pages.</p>
     </footer>
 
+    <!-- 简单筛选逻辑 -->
+    <script>
+        function filterPlatform(category) {
+            // 切换按钮样式
+            const buttons = document.querySelectorAll('.filter-btn');
+            buttons.forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+
+            // 过滤卡片
+            const cards = document.querySelectorAll('.app-card');
+            cards.forEach(card => {
+                if (category === 'all' || card.dataset.category === category) {
+                    card.style.display = 'flex';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+    </script>
 </body>
 </html>
