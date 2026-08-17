@@ -62,41 +62,15 @@
             font-size: 1rem;
         }
 
-        .filter-container {
+        .container {
+            width: 100%;
+            max-width: 480px;
             display: flex;
-            gap: 10px;
-            margin-bottom: 30px;
-            flex-wrap: wrap;
             justify-content: center;
         }
 
-        .filter-btn {
-            background: var(--card-bg);
-            border: 1px solid var(--border);
-            color: var(--text-sub);
-            padding: 8px 16px;
-            border-radius: 20px;
-            cursor: pointer;
-            font-size: 0.9rem;
-            font-weight: 500;
-            transition: all 0.2s;
-        }
-
-        .filter-btn:hover, .filter-btn.active {
-            background: var(--accent);
-            color: #ffffff;
-            border-color: var(--accent);
-        }
-
-        .container {
-            width: 100%;
-            max-width: 900px;
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
-            gap: 20px;
-        }
-
         .app-card {
+            width: 100%;
             background-color: var(--card-bg);
             border: 1px solid var(--border);
             border-radius: 16px;
@@ -208,81 +182,13 @@
 
     <header>
         <h1>应用下载中心</h1>
-        <p>提供支持 Windows、macOS、Linux 及 Android 的最新全平台客户端</p>
+        <p>提供 Android 最新版本客户端下载</p>
     </header>
-
-    <!-- 平台分类筛选组件 -->
-    <div class="filter-container">
-        <button class="filter-btn active" onclick="filterPlatform('all')">全部平台</button>
-        <button class="filter-btn" onclick="filterPlatform('desktop')">桌面端 (Win / Mac / Linux)</button>
-        <button class="filter-btn" onclick="filterPlatform('mobile')">移动端 (Android)</button>
-    </div>
 
     <main class="container">
 
-        <!-- 1. PCloud macOS 版本 -->
-        <div class="app-card" data-category="desktop">
-            <div>
-                <div class="app-header">
-                    <img src="https://api.dicebear.com/7.x/shapes/svg?seed=PCloudMac" alt="Icon" class="app-icon">
-                    <div class="app-info">
-                        <h3>PCloud for macOS</h3>
-                        <div class="app-meta">
-                            <span class="platform-badge">macOS</span>
-                            <span class="version">v1.2.0</span>
-                        </div>
-                    </div>
-                </div>
-                <p class="app-desc">支持 Universal 通用架构（Intel 与 Apple Silicon 原生支持）。</p>
-            </div>
-            <div class="btn-group">
-                <a href="https://drive.mtd.dpdns.org/raw/v1.0.21/pan-client-macos-x86_64-release.dmg" class="download-btn" target="_blank">下载 .dmg</a>
-            </div>
-        </div>
-
-        <!-- 2. PCloud Windows 版本 -->
-        <div class="app-card" data-category="desktop">
-            <div>
-                <div class="app-header">
-                    <img src="https://api.dicebear.com/7.x/shapes/svg?seed=PCloudWin" alt="Icon" class="app-icon">
-                    <div class="app-info">
-                        <h3>PCloud for Windows</h3>
-                        <div class="app-meta">
-                            <span class="platform-badge">Windows</span>
-                            <span class="version">v1.2.0</span>
-                        </div>
-                    </div>
-                </div>
-                <p class="app-desc">支持 Windows 10/11 (64 位系统)，免安装绿色版与安装包。</p>
-            </div>
-            <div class="btn-group">
-                <a href="https://drive.mtd.dpdns.org/raw/v1.0.21/pan-client-windows-x64-v1.0.31608661391.zip" class="download-btn" target="_blank">下载安装包 (.exe)</a>
-            </div>
-        </div>
-
-        <!-- 3. PCloud Linux 版本 -->
-        <div class="app-card" data-category="desktop">
-            <div>
-                <div class="app-header">
-                    <img src="https://api.dicebear.com/7.x/shapes/svg?seed=PCloudLinux" alt="Icon" class="app-icon">
-                    <div class="app-info">
-                        <h3>PCloud for Linux</h3>
-                        <div class="app-meta">
-                            <span class="platform-badge">Linux</span>
-                            <span class="version">v1.2.0</span>
-                        </div>
-                    </div>
-                </div>
-                <p class="app-desc">支持 Ubuntu、Debian、Fedora 及 Arch 等主流发行的通用程序包。</p>
-            </div>
-            <div class="btn-group">
-                <a href="https://drive.mtd.dpdns.org/raw/v1.0.21/pan-client-linux-x64-v1.0.12.tar.gz" class="download-btn" target="_blank">.tar.gz (通用)</a>
-                <a href="https://drive.mtd.dpdns.org/raw/v1.0.21/pan-client-linux-x64-v1.0.12.tar.gz" class="download-btn secondary" target="_blank">.tar.gz (Debian/Ubuntu)</a>
-            </div>
-        </div>
-
-        <!-- 4. PCloud Android 版本 -->
-        <div class="app-card" data-category="mobile">
+        <!-- PCloud Android 版本 -->
+        <div class="app-card">
             <div>
                 <div class="app-header">
                     <img src="https://api.dicebear.com/7.x/shapes/svg?seed=PCloudAndroid" alt="Icon" class="app-icon">
@@ -308,24 +214,5 @@
         <p>© 2026 PCloud Application Center. Powered by GitHub Pages.</p>
     </footer>
 
-    <!-- 简单筛选逻辑 -->
-    <script>
-        function filterPlatform(category) {
-            // 切换按钮样式
-            const buttons = document.querySelectorAll('.filter-btn');
-            buttons.forEach(btn => btn.classList.remove('active'));
-            event.target.classList.add('active');
-
-            // 过滤卡片
-            const cards = document.querySelectorAll('.app-card');
-            cards.forEach(card => {
-                if (category === 'all' || card.dataset.category === category) {
-                    card.style.display = 'flex';
-                } else {
-                    card.style.display = 'none';
-                }
-            });
-        }
-    </script>
 </body>
 </html>
